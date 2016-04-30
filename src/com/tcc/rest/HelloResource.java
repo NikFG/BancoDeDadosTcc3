@@ -10,7 +10,7 @@ import javax.ws.rs.Path;
 public class HelloResource {
 	@GET
 	public String get(){
-		return "Hello get";
+		return "<b>Hello get</b>";
 	}
 	@POST
 	public String post(){

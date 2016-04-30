@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ListaNoticias implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<Noticia> noticias;
+	
 	@XmlElement(name="noticia")
 	public List<Noticia> getNoticia(){
 		return noticias;

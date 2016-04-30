@@ -140,7 +140,7 @@ public class NoticiaDAO extends BaseDAO{
 		PreparedStatement stmt = null;
 		try{
 			conn = getConnection();
-			stmt = conn.prepareStatement("delete from noticia where id=?");
+			stmt = conn.prepareStatement("delete from noticia where idnoticia=?");
 			stmt.setLong(1, id);
 			int count = stmt.executeUpdate();
 			boolean ok = count > 0;

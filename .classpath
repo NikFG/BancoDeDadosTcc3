@@ -16,7 +16,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.23-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
-	<classpathentry kind="lib" path="C:/Users/nikol/Desktop/jettison-1.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jettison-1.2.jar"/>
 	<classpathentry kind="lib" path="C:/Users/nikol/workspace/TCC/WebContent/WEB-INF/lib/aopalliance-repackaged-2.4.0-b34.jar"/>
