@@ -1,50 +1,31 @@
 package com.tcc.domain;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 public class NoticiaService {
-	private NoticiaDAO db = new NoticiaDAO();
+	@Autowired
+	private NoticiaDAO db;
 	
 	public List<Noticia> getNoticias(){
-		try{
-			List<Noticia> noticias = db.getNoticia();
-			return noticias;
-		}catch(SQLException e){
-			e.printStackTrace();
-			return new ArrayList<Noticia>();
-		}
+		List<Noticia> noticias = db.getNoticia();
+		return noticias;
 	}
 	public Noticia getNoticiaId(Long id){
-		try{
-			//object = db.getNoticiaById(id); 
-			return db.getNoticiaById(id);
-		}catch(SQLException e){
-			e.printStackTrace();
-			return null;
-		}
+		//object = db.getNoticiaById(id); 
+		return db.getNoticiaById(id);
 	}
+	@Transactional(rollbackFor=Exception.class)
 	public boolean delete(Long id){
-		try {
-			return db.delete(id);
-		} catch (SQLException e) {
-			return false;
-		}
+		return db.delete(id);
 	}
 	public boolean save(Noticia news){
-		try{
-			db.save(news);
-			return true;		
-		}catch (SQLException e) {
-			return false;
-		}
+		db.saveOrUpdate(news);
+		return true;
 	}
 	public List<Noticia> findByTitulo(String titulo){
-		try {
-			return db.findByTitulo(titulo);
-		} catch (SQLException e) {
-			return null;
-		}
+		return db.findByTitulo(titulo);
 	}
 }

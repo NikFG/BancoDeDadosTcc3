@@ -1,19 +1,21 @@
 package com.tcc.domain;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.mysql.jdbc.Statement;
-
-import java.util.ArrayList;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Connection;
+import org.hibernate.Query;
 
 
-public class NoticiaDAO extends BaseDAO{
-	public Noticia getNoticiaById(Long id) throws SQLException{
-		Connection conn = null;
+public class NoticiaDAO extends HibernateDAO<Noticia>{
+	public NoticiaDAO(){
+		super(Noticia.class);
+	}
+	public Noticia getNoticiaById(Long id){
+		return super.get(id);
+	}
+	/*	Connection conn = null;
 		PreparedStatement stmt = null;
 		try{
 			conn = getConnection();
@@ -34,9 +36,14 @@ public class NoticiaDAO extends BaseDAO{
 			}
 		}
 		return null;
+	}*/
+	public List<Noticia>findByTitulo(String nome) {
+		Query q = getSession().createQuery("from noticia where titulo=?");
+		q.setString(0, "%"+nome+"%");
+		return q.list();
+		
 	}
-	public List<Noticia>findByTitulo(String name) throws SQLException{
-		List<Noticia> noticias = new ArrayList<>();
+	/*	List<Noticia> noticias = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try{
@@ -59,9 +66,14 @@ public class NoticiaDAO extends BaseDAO{
 		}
 		return noticias;
 		
+	}*/
+	
+	public List<Noticia>getNoticia(){
+		Query q = getSession().createQuery("from noticia");
+		List<Noticia> noticias = q.list();
+		return noticias;
 	}
-	public List<Noticia>getNoticia() throws SQLException{
-		List<Noticia> noticias = new ArrayList<>();
+	/*	List<Noticia> noticias = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try{
@@ -82,7 +94,7 @@ public class NoticiaDAO extends BaseDAO{
 			}
 		}
 		return noticias;
-	}
+	}*/
 
 	public Noticia createNoticia(ResultSet rs) throws SQLException {
 		Noticia news = new Noticia();
@@ -92,8 +104,10 @@ public class NoticiaDAO extends BaseDAO{
 		news.setTitulo(rs.getString("titulo"));
 		return news;
 	}
-	public void save(Noticia news) throws SQLException{
-		Connection conn = null;
+	public void save(Noticia news){
+		super.save(news);
+	}
+	/*	Connection conn = null;
 		PreparedStatement stmt = null;
 		try{
 			conn = getConnection();
@@ -126,7 +140,8 @@ public class NoticiaDAO extends BaseDAO{
 				conn.close();
 			}
 		}
-	}
+	}*/
+	
 	public static Long getGeneratedId(PreparedStatement stmt) throws SQLException  {
 		ResultSet rs = stmt.getGeneratedKeys();
 		if (rs.next()){
@@ -135,8 +150,12 @@ public class NoticiaDAO extends BaseDAO{
 		}
 		return 0L;
 	}
-	public boolean delete(Long id) throws SQLException{
-		Connection conn = null;
+	public boolean delete(Long id){
+		Noticia n = get(id);
+		delete(n);
+		return true;
+	}
+		/*Connection conn = null;
 		PreparedStatement stmt = null;
 		try{
 			conn = getConnection();
@@ -153,5 +172,5 @@ public class NoticiaDAO extends BaseDAO{
 				conn.close();
 			}		
 		}
-	}
+	}*/
 }
