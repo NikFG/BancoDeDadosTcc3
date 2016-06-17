@@ -47,7 +47,7 @@ public class Noticia implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Noticia [ idnoticia=" + id + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada + " ,titulo="
+		return "noticia [ idnoticia=" + id + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada + " ,titulo="
 				+ titulo + " ]";
 	}
 }
