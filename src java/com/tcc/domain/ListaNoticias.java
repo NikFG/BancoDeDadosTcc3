@@ -20,6 +20,6 @@ public class ListaNoticias implements Serializable{
 	}
 	@Override
 	public String toString(){
-		return "ListaNoticias [noticias = "+ noticias + "]";
+		return "ListaNoticias [	"+ noticias + "]";
 	}
 }

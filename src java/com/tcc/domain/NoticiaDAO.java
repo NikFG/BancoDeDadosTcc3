@@ -98,13 +98,13 @@ public class NoticiaDAO extends BaseDAO{
 		try{
 			conn = getConnection();
 			if (news.getID()==null){
-				stmt = conn.prepareStatement("insert into noticia (chamada,titulo, textoNoticia) VALUES(?,?,?)",
+				stmt = conn.prepareStatement("insert into noticia (chamada, titulo, textoNoticia) VALUES(?,?,?)",
 						Statement.RETURN_GENERATED_KEYS);
 			}else{
 				stmt = conn.prepareStatement("update noticia set chamada=?,titulo=?,textoNoticia=? where idnoticia=?");
 			}
-			stmt.setString(1, news.getTitulo());
-			stmt.setString(2, news.getChamada());
+			stmt.setString(1, news.getChamada());
+			stmt.setString(2, news.getTitulo());
 			stmt.setString(3, news.getTexto());
 			
 			if (news.getID()!=null){
