@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "noticias")
 public class Noticia implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Long id;
+	private Long idnoticia;
 	private String textoNoticia;
 	private String chamada;
 	private String titulo;
@@ -16,11 +16,11 @@ public class Noticia implements Serializable {
 	private Long report;
 	
 	public Long getID() {
-		return id;
+		return idnoticia;
 	}
 
-	public void setID(Long id) {
-		this.id = id;
+	public void setID(Long idnoticia) {
+		this.idnoticia = idnoticia;
 	}
 
 	public String getTexto() {
@@ -73,7 +73,7 @@ public class Noticia implements Serializable {
 	
 	@Override
 	public String toString() {
-		return "[idnoticia=" + id + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada +
+		return "[idnoticia=" + idnoticia + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada +
 				" ,titulo=" + titulo +" , falaMais=" +falaMais+ " , falaMenos=" +falaMenos +", report="+ report+" ]";
 	}
 

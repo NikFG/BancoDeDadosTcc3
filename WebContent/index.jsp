@@ -8,5 +8,5 @@
 
 <a href="<%=request.getContextPath()%>/rest/noticias/2">/rest/noticias/2</a>
 
-<a href="<%=request.getContextPath()%>/rest/noticias/3">/rest/noticias/3</a>
+<a href="<%=request.getContextPath()%>/rest/noticias/delete/11">/rest/noticias/delete/11</a>
 </pre>

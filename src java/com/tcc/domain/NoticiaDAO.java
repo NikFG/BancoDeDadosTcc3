@@ -90,6 +90,8 @@ public class NoticiaDAO extends BaseDAO{
 		news.setChamada(rs.getString("chamada"));
 		news.setTexto(rs.getString("textoNoticia"));
 		news.setTitulo(rs.getString("titulo"));
+		news.setFalaMais(rs.getLong("falaMais"));
+		news.setFalaMenos(rs.getLong("falaMenos"));
 		return news;
 	}
 	public void save(Noticia news) throws SQLException{
@@ -101,7 +103,8 @@ public class NoticiaDAO extends BaseDAO{
 				stmt = conn.prepareStatement("insert into noticia (chamada, titulo, textoNoticia) VALUES(?,?,?)",
 						Statement.RETURN_GENERATED_KEYS);
 			}else{
-				stmt = conn.prepareStatement("update noticia set chamada=?,titulo=?,textoNoticia=? where idnoticia=?");
+				stmt = conn.prepareStatement("update noticia set chamada=?,titulo=?,textoNoticia=?,"
+						+ "falaMais=?,falaMenos=? where idnoticia=?");
 			}
 			stmt.setString(1, news.getChamada());
 			stmt.setString(2, news.getTitulo());
@@ -135,6 +138,7 @@ public class NoticiaDAO extends BaseDAO{
 		}
 		return 0L;
 	}
+	
 	public boolean delete(Long id) throws SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;

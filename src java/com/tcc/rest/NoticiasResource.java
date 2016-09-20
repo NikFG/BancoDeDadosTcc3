@@ -24,9 +24,9 @@ public class NoticiasResource {
 	}
 	
 	@GET
-	@Path("{id}")
-	public Noticia get(@PathParam("id") long id){
-		Noticia n = noticiaService.getNoticiaId(id);
+	@Path("{idnoticia}")
+	public Noticia get(@PathParam("idnoticia") long idnoticia){
+		Noticia n = noticiaService.getNoticiaId(idnoticia);
 		return n;
 		
 	}
@@ -37,9 +37,9 @@ public class NoticiasResource {
 		return noticias;
 	}
 	@DELETE
-	@Path("{id}")
-	public Response delete(@PathParam("idnoticia") long id){
-		noticiaService.delete(id);
+	@Path("/delete/{idnoticia}")
+	public Response delete(@PathParam("idnoticia") long idnoticia){
+		noticiaService.delete(idnoticia);
 		return Response.Ok("Deletado");
 	}
 	@POST
