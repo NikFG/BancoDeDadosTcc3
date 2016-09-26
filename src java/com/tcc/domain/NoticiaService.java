@@ -47,4 +47,11 @@ public class NoticiaService {
 			return null;
 		}
 	}
+	public List<Noticia>findByTipo(Long tipo){
+		try{
+			return db.findByTipo(tipo);
+		}catch(SQLException e){
+			return null;
+		}
+	}
 }

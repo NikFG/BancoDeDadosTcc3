@@ -14,7 +14,8 @@ public class Noticia implements Serializable {
 	private Long falaMais;
 	private Long falaMenos;
 	private Long report;
-	
+	private Long tipoNoticia;
+
 	public Long getID() {
 		return idnoticia;
 	}
@@ -47,6 +48,7 @@ public class Noticia implements Serializable {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
+
 	public Long getFalaMais() {
 		return falaMais;
 	}
@@ -70,12 +72,19 @@ public class Noticia implements Serializable {
 	public void setReport(Long report) {
 		this.report = report;
 	}
-	
-	@Override
-	public String toString() {
-		return "[idnoticia=" + idnoticia + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada +
-				" ,titulo=" + titulo +" , falaMais=" +falaMais+ " , falaMenos=" +falaMenos +", report="+ report+" ]";
+
+	public Long getTipoNoticia() {
+		return tipoNoticia;
 	}
 
+	public void setTipoNoticia(Long tipoNoticia) {
+		this.tipoNoticia = tipoNoticia;
+	}
 
+	@Override
+	public String toString() {
+		return "[idnoticia=" + idnoticia + " , textoNoticia=" + textoNoticia + " , chamada=" + chamada + " ,titulo="
+				+ titulo + " , falaMais=" + falaMais + " , falaMenos=" + falaMenos + ", report=" + report + ""
+				+ " , tipoNoticia=" + tipoNoticia + "]";
+	}
 }

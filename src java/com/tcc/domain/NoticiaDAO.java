@@ -10,74 +10,100 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 
-
-public class NoticiaDAO extends BaseDAO{
-	public Noticia getNoticiaById(Long id) throws SQLException{
+public class NoticiaDAO extends BaseDAO {
+	public Noticia getNoticiaById(Long id) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try{
+		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement("select * from noticia where idnoticia=?");
 			stmt.setLong(1, id);
 			ResultSet rs = stmt.executeQuery();
-			if(rs.next()){
+			if (rs.next()) {
 				Noticia news = createNoticia(rs);
 				rs.close();
 				return news;
 			}
-		}finally{
-			if (stmt!=null){
+		} finally {
+			if (stmt != null) {
 				stmt.close();
 			}
-			if(conn!=null){
+			if (conn != null) {
 				conn.close();
 			}
 		}
 		return null;
 	}
-	public List<Noticia>findByTitulo(String name) throws SQLException{
+
+	public List<Noticia> findByTitulo(String name) throws SQLException {
 		List<Noticia> noticias = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try{
+		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement("select * from noticia where(titulo) like?");
 			stmt.setString(1, "%" + name.toLowerCase() + "%");
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Noticia news = createNoticia(rs);
 				noticias.add(news);
 			}
 			rs.close();
-		}finally{
-			if (stmt!=null){
+		} finally {
+			if (stmt != null) {
 				stmt.close();
 			}
-			if(conn!=null){
+			if (conn != null) {
 				conn.close();
 			}
 		}
 		return noticias;
-		
+
 	}
-	public List<Noticia>getNoticia() throws SQLException{
+
+	public List<Noticia> findByTipo(Long tipo) throws SQLException {
 		List<Noticia> noticias = new ArrayList<>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try{
+		try {
 			conn = getConnection();
-			stmt = conn.prepareStatement("select * from noticia");
+			stmt = conn.prepareStatement("select * from noticia where tipoNoticia=?");
+			stmt.setLong(1, tipo);
 			ResultSet rs = stmt.executeQuery();
-			while(rs.next()){
+			while (rs.next()) {
 				Noticia news = createNoticia(rs);
 				noticias.add(news);
 			}
 			rs.close();
-		}finally{
-			if (stmt!=null){
+		} finally {
+			if (stmt != null) {
 				stmt.close();
 			}
-			if(conn!=null){
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return noticias;
+	}
+
+	public List<Noticia> getNoticia() throws SQLException {
+		List<Noticia> noticias = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement("select * from noticia");
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Noticia news = createNoticia(rs);
+				noticias.add(news);
+			}
+			rs.close();
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
 				conn.close();
 			}
 		}
@@ -92,70 +118,75 @@ public class NoticiaDAO extends BaseDAO{
 		news.setTitulo(rs.getString("titulo"));
 		news.setFalaMais(rs.getLong("falaMais"));
 		news.setFalaMenos(rs.getLong("falaMenos"));
+		news.setTipoNoticia(rs.getLong("tipoNoticia"));
 		return news;
 	}
-	public void save(Noticia news) throws SQLException{
+
+	public void save(Noticia news) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try{
+		try {
 			conn = getConnection();
-			if (news.getID()==null){
-				stmt = conn.prepareStatement("insert into noticia (chamada, titulo, textoNoticia) VALUES(?,?,?)",
+			if (news.getID() == null) {
+				stmt = conn.prepareStatement(
+						"insert into noticia (chamada, titulo, textoNoticia, tipoNoticia)" + " VALUES(?,?,?,?)",
 						Statement.RETURN_GENERATED_KEYS);
-			}else{
-				stmt = conn.prepareStatement("update noticia set chamada=?,titulo=?,textoNoticia=?,"
-						+ "falaMais=?,falaMenos=? where idnoticia=?");
+			} else {
+				stmt = conn.prepareStatement(
+						"update noticia set chamada=?,titulo=?,textoNoticia=?,tipoNoticia=?, where idnoticia=?");
 			}
 			stmt.setString(1, news.getChamada());
 			stmt.setString(2, news.getTitulo());
 			stmt.setString(3, news.getTexto());
-			
-			if (news.getID()!=null){
-				stmt.setLong(4, news.getID());
+			stmt.setLong(4, news.getTipoNoticia());
+
+			if (news.getID() != null) {
+				stmt.setLong(5, news.getID());
 			}
 			int count = stmt.executeUpdate();
-			if (count == 0){
+			if (count == 0) {
 				throw new SQLException("Erro ao inserir noticia");
 			}
-			if (news.getID()== null){
+			if (news.getID() == null) {
 				Long id = getGeneratedId(stmt);
 				news.setID(id);
 			}
-		}finally{
-			if (stmt!=null){
+		} finally {
+			if (stmt != null) {
 				stmt.close();
 			}
-			if(conn!=null){
+			if (conn != null) {
 				conn.close();
 			}
 		}
 	}
-	public static Long getGeneratedId(PreparedStatement stmt) throws SQLException  {
+
+	public static Long getGeneratedId(PreparedStatement stmt) throws SQLException {
 		ResultSet rs = stmt.getGeneratedKeys();
-		if (rs.next()){
+		if (rs.next()) {
 			Long id = rs.getLong(1);
 			return id;
 		}
 		return 0L;
 	}
-	
-	public boolean delete(Long id) throws SQLException{
+
+	public boolean delete(Long id) throws SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try{
+		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement("delete from noticia where idnoticia=?");
 			stmt.setLong(1, id);
 			int count = stmt.executeUpdate();
 			boolean ok = count > 0;
 			return ok;
-		}finally{
-			if (stmt!=null){
+		} finally {
+			if (stmt != null) {
 				stmt.close();
 			}
-			if(conn!=null){
+			if (conn != null) {
 				conn.close();
-			}		
+			}
 		}
 	}
 }
