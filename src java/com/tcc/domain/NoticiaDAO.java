@@ -129,11 +129,11 @@ public class NoticiaDAO extends BaseDAO {
 			conn = getConnection();
 			if (news.getID() == null) {
 				stmt = conn.prepareStatement(
-						"insert into noticia (chamada, titulo, textoNoticia, tipoNoticia)" + " VALUES(?,?,?,?)",
+						"insert into noticia (chamada, titulo, textoNoticia, tipoNoticia) VALUES(?,?,?,?)",
 						Statement.RETURN_GENERATED_KEYS);
 			} else {
 				stmt = conn.prepareStatement(
-						"update noticia set chamada=?,titulo=?,textoNoticia=?,tipoNoticia=?, where idnoticia=?");
+						"update noticia set chamada=?,titulo=?,textoNoticia=?,tipoNoticia=? where idnoticia=?");
 			}
 			stmt.setString(1, news.getChamada());
 			stmt.setString(2, news.getTitulo());
@@ -180,6 +180,60 @@ public class NoticiaDAO extends BaseDAO {
 			int count = stmt.executeUpdate();
 			boolean ok = count > 0;
 			return ok;
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	public void UpdateFalaMais(Noticia news) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement("update noticia set falaMais=? where idnoticia=?");
+			stmt.setLong(1, news.getFalaMais() + 1);
+			stmt.setLong(2, news.getID());
+
+			int count = stmt.executeUpdate();
+			if (count == 0) {
+				throw new SQLException("Erro ao inserir noticia");
+			}
+			if (news.getID() == null) {
+				Long id = getGeneratedId(stmt);
+				news.setID(id);
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	public void UpdateFalaMenos(Noticia news) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement("update noticia set falaMenos=? where idnoticia=?");
+			stmt.setLong(1, news.getFalaMenos() + 1);
+			stmt.setLong(2, news.getID());
+
+			int count = stmt.executeUpdate();
+			if (count == 0) {
+				throw new SQLException("Erro ao inserir noticia");
+			}
+			if (news.getID() == null) {
+				Long id = getGeneratedId(stmt);
+				news.setID(id);
+			}
 		} finally {
 			if (stmt != null) {
 				stmt.close();

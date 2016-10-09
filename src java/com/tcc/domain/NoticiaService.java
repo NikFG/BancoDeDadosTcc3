@@ -54,4 +54,20 @@ public class NoticiaService {
 			return null;
 		}
 	}
+	public boolean UpdateFalaMais(Noticia news){
+		try{
+			db.UpdateFalaMais(news);
+			return true;		
+		}catch (SQLException e) {
+			return false;
+		}
+	}
+	public boolean UpdateFalaMenos(Noticia news){
+		try{
+			db.UpdateFalaMenos(news);
+			return true;		
+		}catch (SQLException e) {
+			return false;
+		}
+	}
 }

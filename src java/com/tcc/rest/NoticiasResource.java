@@ -63,4 +63,18 @@ public class NoticiasResource {
 		noticiaService.save(n);
 		return Response.Ok("Atualizado");
 	}
+
+	@PUT
+	@Path("/FalaMais")
+	public Response putFalaMais(Noticia n) {
+		noticiaService.UpdateFalaMais(n);
+		return Response.Ok("Deu");
+	}
+
+	@PUT
+	@Path("/FalaMenos")
+	public Response putFalaMenos(Noticia n) {
+		noticiaService.UpdateFalaMenos(n);
+		return Response.Ok("Deu");
+	}
 }
