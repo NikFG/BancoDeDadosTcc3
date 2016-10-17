@@ -77,4 +77,10 @@ public class NoticiasResource {
 		noticiaService.UpdateFalaMenos(n);
 		return Response.Ok("Deu");
 	}
+	@PUT
+	@Path("/Report")
+	public Response putReport(Noticia n) {
+		noticiaService.UpdateReport(n);
+		return Response.Ok("Deu");
+	}
 }

@@ -119,6 +119,7 @@ public class NoticiaDAO extends BaseDAO {
 		news.setFalaMais(rs.getLong("falaMais"));
 		news.setFalaMenos(rs.getLong("falaMenos"));
 		news.setTipoNoticia(rs.getLong("tipoNoticia"));
+		news.setReport(rs.getLong("report"));
 		return news;
 	}
 
@@ -224,6 +225,33 @@ public class NoticiaDAO extends BaseDAO {
 			conn = getConnection();
 			stmt = conn.prepareStatement("update noticia set falaMenos=? where idnoticia=?");
 			stmt.setLong(1, news.getFalaMenos() + 1);
+			stmt.setLong(2, news.getID());
+
+			int count = stmt.executeUpdate();
+			if (count == 0) {
+				throw new SQLException("Erro ao inserir noticia");
+			}
+			if (news.getID() == null) {
+				Long id = getGeneratedId(stmt);
+				news.setID(id);
+			}
+		} finally {
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	}
+
+	public void UpdateReport(Noticia news) throws SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement("update noticia set report=? where idnoticia=?");
+			stmt.setLong(1, news.getReport() + 1);
 			stmt.setLong(2, news.getID());
 
 			int count = stmt.executeUpdate();

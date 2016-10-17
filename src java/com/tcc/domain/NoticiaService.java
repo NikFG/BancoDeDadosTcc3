@@ -70,4 +70,12 @@ public class NoticiaService {
 			return false;
 		}
 	}
+	public boolean UpdateReport(Noticia news){
+		try{
+			db.UpdateReport(news);
+			return true;		
+		}catch (SQLException e) {
+			return false;
+		}
+	}
 }
